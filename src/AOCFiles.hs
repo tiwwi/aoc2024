@@ -9,7 +9,7 @@ import System.Directory
 import Control.Monad (unless)
 
 getToken :: IO B.ByteString
-getToken = B.strip <$> B.readFile "app/session_token.cookie"
+getToken = B.strip <$> B.readFile "app/session_token"
 
 pullAOCInputUncached :: FilePath -> Int -> Int -> IO ()
 pullAOCInputUncached target year day = do
