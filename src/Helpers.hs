@@ -5,7 +5,8 @@ module Helpers (
     quickParseT,
     count,
     takeUntil,
-    pairs,
+    allPairs,
+    pairwise,
 ) where
 
 import qualified Data.Text as T
@@ -34,8 +35,12 @@ takeUntil f (x:xs)
     | f x = [x]
     | otherwise = x:takeUntil f xs
 
-pairs :: [a] -> [(a, a)]
-pairs xs = [ (x,y) | (x:ys) <- tails xs, y <- ys ]
+allPairs :: [a] -> [(a, a)]
+allPairs xs = [ (x,y) | (x:ys) <- tails xs, y <- ys ]
+
+pairwise :: [a] -> [(a, a)]
+pairwise (x:xs'@(y:_)) = (x,y):pairwise xs'
+pairwise _ = []
 
 count :: (a -> Bool) -> [a] -> Int
 count f = length . filter f
