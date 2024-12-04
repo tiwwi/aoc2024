@@ -43,6 +43,7 @@ library
         attoparsec,
         directory,
         bytestring,
+        linear,
         http-conduit,
 
 executable aoc2024

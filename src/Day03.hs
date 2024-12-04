@@ -1,9 +1,15 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Day03 (solve) where
 
 import Data.Text qualified as T
 import Data.Text.IO qualified as T
+import qualified Data.Attoparsec.Text as A
+import Control.Applicative
 
-type Input = [T.Text]
+import Helpers (quickParseT)
+
+type Input = [Op]
+data Op = Mul Int Int | Do | Dont deriving(Eq, Show)
 
 solve :: FilePath -> IO (String, String)
 solve fname = do
@@ -11,9 +17,32 @@ solve fname = do
     let input = parseInput txt
     return (show $ part1 input, show $ part2 input)
 
-parseInput = undefined
+parseInput :: T.Text -> [Op]
+parseInput = quickParseT $ A.many1 (next opParser)
 
-part1 :: Input -> String
-part1 = const "unfinished"
-part2 :: Input -> String
-part2 = const "unfinished"
+opParser :: A.Parser Op
+opParser = mulParser <|> (Do <$ A.string "do()") <|> (Dont <$ A.string "don't()")
+
+mulParser :: A.Parser Op
+mulParser = Mul 
+    <$> (A.string "mul" *> A.char '(' *> A.decimal <* A.char ',') 
+    <*> (A.decimal <* A.char ')')
+
+next :: A.Parser a -> A.Parser a
+next p = p <|> (A.anyChar *> next p) 
+
+eval :: Op -> Int
+eval (Mul a b) = a*b
+eval Do = 0
+eval Dont = 0
+
+--dont :: [Op] -> [Op]
+--dont (Dont:xs) = dont $ dropWhile (==Do)
+
+part1 :: [Op] -> Int
+part1 = sum . map eval
+part2 :: Input -> Int
+part2 = snd . foldl go (True, 0)
+    where go (True, s) (Mul a b) = (True, s + (a*b))
+          go (False, s) (Mul _ _) = (False, s)
+          go (_, s) op = (op==Do, s)

@@ -7,12 +7,20 @@ module Helpers (
     takeUntil,
     allPairs,
     pairwise,
+    AOCMatrix,
+    Pos,
+    readAOCMatrix
 ) where
 
 import qualified Data.Text as T
 import qualified Data.Attoparsec.Text as T
 import Text.Read (readMaybe)
 import Data.List (tails)
+import Linear.V2
+import Data.Array.IArray
+
+type Pos = V2 Int
+type AOCMatrix = Array Pos Char
 
 readT :: Read a => T.Text -> a
 readT = read . T.unpack
@@ -44,3 +52,11 @@ pairwise _ = []
 
 count :: (a -> Bool) -> [a] -> Int
 count f = length . filter f
+
+readAOCMatrix :: String -> AOCMatrix
+readAOCMatrix txt = listArray (lo, hi) $ concat lns
+    where nCols = length $ head lns
+          nRows = length lns
+          lns = lines txt
+          lo = V2 1 1
+          hi = V2 nRows nCols

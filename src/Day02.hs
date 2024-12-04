@@ -1,7 +1,6 @@
 module Day02 (solve) where
 
 import Helpers (count, pairwise)
---import Data.List (inits, tails)
 
 type Report = [Int]
 type Input = [Report]
