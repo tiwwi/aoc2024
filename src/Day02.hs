@@ -1,6 +1,6 @@
 module Day02 (solve) where
 
-import Helpers (count, pairwise)
+import Helpers.List (count, pairwise)
 
 type Report = [Int]
 type Input = [Report]

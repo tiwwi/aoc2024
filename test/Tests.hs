@@ -64,7 +64,7 @@ main :: IO ()
 main = defaultMain tests
 
 testedDays :: [Int]
-testedDays = [1]
+testedDays = [7]
 
 tests :: TestTree
 tests = testGroup "All Tests" (testDay <$> testedDays)
@@ -74,6 +74,8 @@ testDay n = testGroup (printf "day%02d" n) (dayTests n)
 
 dayTests :: Int -> [TestTree]
 dayTests 1 = [part1Test 1 "ex1.in" "11", part2Test 1 "ex1.in" "31"]
+dayTests 6 = [part2Test 6 "ex.in" "6"]
+dayTests 7 = [part1Test 7 "ex.in" "3749", part2Test 7 "ex.in" "11387"]
 dayTests _ = error "Unknown Day!"
 
 partTest:: ((String, String) -> String) -> Int -> String -> String -> String -> TestTree
