@@ -83,7 +83,7 @@ runDays :: [Int] -> IO ()
 runDays xs = mapM_ (runDay >=> putStrLn) $ fill xs
   where
     fill [] = [1 .. 25]
-    fill xss = xss
+    fill xs' = xs'
 
 main :: IO ()
 main = getArgs >>= runDays . map read

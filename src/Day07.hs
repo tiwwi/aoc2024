@@ -7,7 +7,6 @@ import Helpers.Text
 
 data Equation = Equation {lhs::Int, rhs::[Int]} deriving (Eq, Show)
 type Input = [Equation]
-type Op = Int -> Int -> Int
 
 solve :: FilePath -> IO (String, String)
 solve fname = do
@@ -15,27 +14,32 @@ solve fname = do
     let input = parseLine <$> T.lines txt
     return (show $ part1 input, show $ part2 input)
 
+parseLine :: T.Text -> Equation
 parseLine txt = Equation (readT num) (nums)
     where [num, rest] = T.splitOn ": " txt
           nums = reverse $ readT <$> T.splitOn " " rest
 
-isSolvable :: [Op] -> Equation -> Bool
-isSolvable ops (Equation lhs rhs) = lhs `elem` (allNums (reverse rhs))
-    where allNums [x] = [x]
-          allNums (x:xs) = filter (<= lhs) $ ($ x) <$> ops <*> allNums xs
 
-isSolvableFast :: Equation -> Bool
-isSolvableFast (Equation _ []) = False
-isSolvableFast (Equation lhs [x]) = lhs == x
-isSolvableFast (Equation lhs (x:xs)) = isSolvableFast (Equation (lhs-x) xs) || (m == 0 && isSolvableFast (Equation d xs))
+solvable, solvable2 :: Equation -> Bool
+solvable (Equation lhs [x]) = lhs == x
+solvable (Equation lhs (x:xs)) = solvable (Equation (lhs-x) xs) || (m == 0 && solvable (Equation d xs))
     where (d, m) = lhs `divMod` x
 
-runOps :: [Op] -> [Equation] -> Int
-runOps ops = sum . map lhs . filter isSolvableFast
+solvable2 (Equation lhs [x]) = lhs == x
+solvable2 (Equation lhs (x:xs)) = (solvable2 (Equation (lhs-x) xs)) || ((m == 0 && solvable2 (Equation d xs))) || (or $ solvable2 <$> (Equation <$> intStripSuffix x lhs <*> pure xs))
+    where (d, m) = lhs `divMod` x
+          
 
-(><) :: Op
-x >< y = read $ show x <> show y
+intStripSuffix :: Int -> Int -> Maybe Int
+intStripSuffix 0 y = Just y
+intStripSuffix x y 
+     | x == 0 = Just y
+     | lastx == lasty = intStripSuffix remx remy
+     | otherwise = Nothing
+  where (remx, lastx) = x `divMod` 10
+        (remy, lasty) = y `divMod` 10
 
 part1, part2 :: Input -> Int
-part1 = runOps [(*), (+)]
-part2 = const 0
+part1 = sum . map lhs . filter solvable
+part2 = sum . map lhs . filter solvable2
+

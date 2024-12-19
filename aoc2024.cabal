@@ -31,7 +31,7 @@ library
         Day16, Day17, Day18, Day19, Day20,
         Day21, Day22, Day23, Day24, Day25,
 
-    other-modules: Helpers
+    other-modules: Helpers, Helpers.Matrix, Helpers.Text, Helpers.List
     hs-source-dirs: src
     default-language: GHC2021
     hs-source-dirs:   src
@@ -45,6 +45,7 @@ library
         bytestring,
         linear,
         http-conduit,
+        vector,
 
 executable aoc2024
     main-is:          Main.hs
@@ -65,7 +66,7 @@ test-suite aoc2024-test
     hs-source-dirs:   test
     main-is:          Tests.hs
     build-depends:
-        base ^>=4.17.2.1,
+        base,
         aoc2024,
         tasty,
         tasty-hunit,
