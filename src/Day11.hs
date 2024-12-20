@@ -3,13 +3,13 @@ module Day11 (solve) where
 import Data.Text qualified as T
 import Data.Text.IO qualified as T
 import Helpers.Text(readT)
-import Data.Map qualified as M
+import Data.IntMap qualified as M
 import Debug.Trace
 
 type Stone = Int
 type Input = [Stone]
 
-type Stones = M.Map Stone Int
+type Stones = M.IntMap Int
 
 solve :: FilePath -> IO (String, String)
 solve fname = do
