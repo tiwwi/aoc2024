@@ -10,6 +10,9 @@ module Helpers.Matrix
     left,
     rotateRight,
     rotateLeft,
+    cardinalNbs,
+    toVec,
+    cardinals,
     module Linear.V2,
     module Linear.Vector,
     module Data.Array.IArray,
@@ -21,6 +24,7 @@ import Data.Array.IArray
 import Data.Array.Unboxed
 import Linear.V2
 import Linear.Vector
+import Data.Maybe (mapMaybe)
 
 data Direction = U | R | D | L deriving (Show, Eq, Ord, Enum)
 
@@ -63,3 +67,6 @@ toVec L = V2 0 (-1)
 rotateRight, rotateLeft :: V2 Int -> V2 Int
 rotateRight (V2 a b) = V2 b (-a)
 rotateLeft (V2 a b) = V2 (-b) a
+
+cardinalNbs :: IArray a e => a Pos e -> Pos -> [(Pos, e)]
+cardinalNbs arr pos = mapMaybe (\p -> (p,) <$> (arr !? p)) $ (pos +) <$> cardinals
