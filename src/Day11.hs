@@ -20,10 +20,8 @@ solve fname = do
 
 -- Is this faster than using div? I dunno
 nDigits :: Int -> Int
-nDigits = findTen' 10 1
-    where findTen' ten k n
-                | ten > n = k
-                | otherwise = findTen' (ten*10) (k+1) n
+nDigits 0 = 0
+nDigits n = 1 + (nDigits $ div n 10)
 
 blink :: Stones -> Stones
 blink stones = M.fromListWith (+) (M.toList stones >>= (\(stone, n) -> (,n) <$> blinkOne stone)) 
