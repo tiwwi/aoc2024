@@ -5,11 +5,13 @@ module Helpers.List (
     count,
     countUnique,
     dedup,
-    takeWhileJust
+    takeWhileJust,
+    counter,
 ) where
 
 import Data.List
 import qualified Data.Set as S
+import qualified Data.Map.Strict as M
 
 takeUntil :: (a -> Bool) -> [a] -> [a]
 takeUntil _ [] = []
@@ -35,4 +37,7 @@ dedup = S.toList . S.fromList
 
 takeWhileJust :: [Maybe a] -> [a]
 takeWhileJust = foldr (maybe (const []) (:)) []
+
+counter :: Ord a => [a] -> M.Map a Int
+counter xs = M.fromListWith (+) $ (,1) <$> xs
 

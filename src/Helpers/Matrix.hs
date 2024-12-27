@@ -1,6 +1,7 @@
 module Helpers.Matrix
   ( AOCMatrix,
     readAOCMatrix,
+    showMatrix,
     Pos,
     Dir,
     up,
@@ -33,7 +34,7 @@ type Dir = V2 Int
 
 type AOCMatrix = UArray Pos Char
 
-readAOCMatrix :: String -> AOCMatrix
+readAOCMatrix :: IArray a Char => String -> a Pos Char
 readAOCMatrix txt = listArray (lo, hi) $ concat lns
   where
     nCols = length $ head lns
@@ -70,3 +71,15 @@ rotateLeft (V2 a b) = V2 (-b) a
 
 cardinalNbs :: IArray a e => a Pos e -> Pos -> [(Pos, e)]
 cardinalNbs arr pos = mapMaybe (\p -> (p,) <$> (arr !? p)) $ (pos +) <$> cardinals
+
+paddedWith :: (IArray a e) => a Pos e -> e -> a Pos e
+paddedWith arr pad = array (lo', hi') (zip square (repeat pad) ++ assocs arr)
+    where (lo@(V2 lx ly), hi@(V2 hx hy)) = bounds arr
+          lo' = subtract 1 <$> lo
+          hi' = (+1) <$> hi
+          square = [V2 (hx+1) y | ]++ [V2 x (hy + 1) | x <- [lx..hx+1]]++ [V2 x (ly - 1) | x <- [lx..hx+1]]++ [V2 (lx-1) y | y <- [ly-1 .. ly+1]]
+
+showMatrix :: (Show e, IArray a e) => a Pos e -> String
+showMatrix arr = unlines $ [row i | i <- [lx..hx]]
+    where row i = concatMap show [arr ! V2 i j | j <- [ly..hy]]
+          (V2 lx ly, V2 hx hy) = bounds arr

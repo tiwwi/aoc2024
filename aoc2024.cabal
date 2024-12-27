@@ -36,15 +36,16 @@ library
     default-language: GHC2021
     hs-source-dirs:   src
     build-depends:
-        base,
-        text,
         array,
-        containers,
         attoparsec,
-        directory,
+        base,
         bytestring,
-        linear,
+        containers,
+        directory,
         http-conduit,
+        linear,
+        mtl,
+        text,
         vector,
 
 executable aoc2024
