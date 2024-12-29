@@ -5,7 +5,7 @@ import qualified Data.Map as M
 import qualified Data.Set as S
 import Helpers.List
 
-data Roof = Roof {bds::(Pos, Pos), antennas::M.Map Char [Pos]}
+data Roof = Roof {_bds::(Pos, Pos), antennas::M.Map Char [Pos]}
 
 solve :: FilePath -> IO (String, String)
 solve fname = do
@@ -13,8 +13,9 @@ solve fname = do
     let input = parseInput txt
     return (show $ part1 input, show $ part2 input)
 
+parseInput :: String -> Roof
 parseInput str = Roof (bounds mat) out
-    where mat = readAOCMatrix str
+    where mat = readAOCMatrix str :: UArray Pos Char
           out = M.fromListWith (++) [(c, [pos]) | (pos, c) <- assocs mat, c /= '.']
 
 findAntinodes :: (Roof -> (Pos, Pos) -> [Pos]) -> Roof -> S.Set Pos

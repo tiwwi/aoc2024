@@ -31,7 +31,7 @@ library
         Day16, Day17, Day18, Day19, Day20,
         Day21, Day22, Day23, Day24, Day25,
 
-    other-modules: Helpers, Helpers.Matrix, Helpers.Text, Helpers.List
+    other-modules: Helpers, Helpers.Matrix, Helpers.Text, Helpers.List, Helpers.Algorithms
     hs-source-dirs: src
     default-language: GHC2021
     hs-source-dirs:   src
@@ -46,6 +46,7 @@ library
         linear,
         mtl,
         text,
+        pqueue,
         vector,
 
 executable aoc2024

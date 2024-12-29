@@ -1,6 +1,7 @@
 module Helpers.Text (
     readT,
     readMaybeT,
+    replaceAll,
     quickParseT
 ) where
 
@@ -18,3 +19,8 @@ quickParseT :: T.Parser a -> T.Text -> a
 quickParseT p txt = case T.parseOnly p txt of
                         Right a -> a
                         Left err -> error err
+
+replaceAll :: [(T.Text, T.Text)] -> T.Text -> T.Text
+replaceAll pairs base = foldr go base pairs
+    where go (a,b) t = T.replace a b t
+    

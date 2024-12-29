@@ -21,7 +21,7 @@ solve fname = do
 
 parseInput :: String -> (Guard, Board)
 parseInput str = (Guard startPos up, listArray (bounds arr) $ charToField <$> elems arr)
-    where arr = readAOCMatrix str
+    where arr = readAOCMatrix str :: UArray Pos Char
           Just startPos = lookup '^' $ swap <$> assocs arr
           charToField '#' = wall
           charToField _ = clear
