@@ -64,7 +64,7 @@ main :: IO ()
 main = defaultMain tests
 
 testedDays :: [Int]
-testedDays = [16]
+testedDays = [17]
 
 tests :: TestTree
 tests = testGroup "All Tests" (testDay <$> testedDays)
@@ -74,6 +74,10 @@ testDay n = testGroup (printf "day%02d" n) (dayTests n)
 
 dayTests :: Int -> [TestTree]
 dayTests 1 = [part1Test 1 "ex1.in" "11", part2Test 1 "ex1.in" "31"]
+dayTests 2 = []
+dayTests 3 = []
+dayTests 4 = []
+dayTests 5 = []
 dayTests 6 = [part2Test 6 "ex.in" "6"]
 dayTests 7 = [part1Test 7 "ex.in" "3749", part2Test 7 "ex.in" "11387"]
 dayTests 8 = [part1Test 8 "ex.in" "14", part2Test 7 "ex.in" "11387"]
@@ -82,8 +86,10 @@ dayTests 10 = [part1Test 10 "ex.in" "36", part2Test 10 "ex.in" "81" ]
 dayTests 11 = [part1Test 11 "ex.in" "55312"]
 dayTests 12 = [part1Test 12 "ex1.in" "140", part1Test 12 "ex2.in" "772", part1Test 12 "ex3.in" "1930", part2Test 12 "ex1.in" "80"]
 dayTests 13 = [part1Test 13 "ex.in" "480"]
+dayTests 14 = []
 dayTests 15 = [part1Test 15 "ex.in" "10092", part2Test 15 "ex.in" "9021"]
 dayTests 16 = [part1Test 16 "ex1.in" "7036", part1Test 16 "ex2.in" "11048", part2Test 16 "ex1.in" "45", part2Test 16 "ex2.in" "64"]
+dayTests 17 = [part1Test 17 "ex.in" "4,6,3,5,6,3,5,2,1,0", part1Test 17 "ex2.in" "0,1,2", part1Test 17 "ex3.in" "4,2,5,6,7,7,7,7,3,1,0"]
 dayTests _ = error "Unknown Day!"
 
 partTest:: ((String, String) -> String) -> Int -> String -> String -> String -> TestTree

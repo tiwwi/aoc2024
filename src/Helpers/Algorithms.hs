@@ -18,7 +18,7 @@ dijkstra start nbf isGoal = (PQ.getMin finQ, finF)
             else getNext q found
     dijkstraStep (queue, found) = fromMaybe (PQ.empty, found) $ do
         ((dist, m), queue', found') <- getNext queue found
-        let newNbs = [(dist+edgeDist, nb) | (edgeDist, nb) <- nbf m]
+        let newNbs = [(dist+edgeDist, nb) | (edgeDist, nb) <- nbf m, M.notMember nb found']
         pure (foldr PQ.insert queue' newNbs, found')
 
     isDone (queue, _) = PQ.null queue || (isGoal $ snd $ PQ.findMin queue)
