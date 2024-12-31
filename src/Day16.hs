@@ -9,7 +9,6 @@ import Helpers.List (dedup)
 data Field = Wall | Empty deriving (Eq)
 
 data Race = Race {start :: Pos, end :: Pos, maze :: Array Pos Field}
-
 data Deer = Deer {pos :: Pos, dir :: Dir} deriving (Eq, Ord, Show)
 
 solve :: FilePath -> IO (String, String)

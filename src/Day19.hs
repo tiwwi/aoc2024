@@ -35,6 +35,7 @@ towelP = A.takeWhile1 isAlpha
 designP :: A.Parser Design
 designP = towelP
 
+-- TODO: Use Tree Structure to improve performance for checking containment in towels
 findNum :: Int -> S.Set Towel -> Design -> Int
 findNum maxTowel towels design = dpTable V.! B.length design
   where

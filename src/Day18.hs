@@ -7,11 +7,9 @@ import Helpers.Text
 import Helpers.Matrix
 import Helpers.Algorithms
 import Data.Set qualified as S
-import Data.Map qualified as M
-import Data.Ix
-import Debug.Trace
 import Data.Vector qualified as V
 import Data.Maybe (isNothing)
+import qualified Data.Map as M
 
 type Blocks = V.Vector (S.Set Pos)
 
@@ -19,7 +17,7 @@ solve :: FilePath -> IO (String, String)
 solve fname = do
     txt <- T.readFile fname
     let input = parseInput txt
-    return (show $ part1 input 1024, show $ part2 input)
+    return (show $ part1 input 1024, part2 input)
 
 parseInput :: T.Text -> Blocks
 parseInput input = V.fromList blockList
@@ -39,15 +37,15 @@ binS (lo, hi) p  = case (pm, pm') of
           pm' = p m'
 
 part1 :: Blocks -> Int -> Maybe Int
-part1 blocks n = fst <$> (fst $ dijkstra start nbf isGoal)
+part1 blocks n = M.lookup end $ bfs start nbf 
     where dropped = blocks V.! n
           start = V2 0 0
           end = V2 70 70
           bounds = (start, end)
-          isGoal = (== end)
-          nbf pos = [ (1,nPos) | d <- cardinals, let nPos = pos + d, inRange bounds nPos && nPos `S.notMember` dropped]
+          nbf pos = [ nPos | d <- cardinals, let nPos = pos + d, inRange bounds nPos && nPos `S.notMember` dropped]
 
-part2 :: Blocks -> S.Set Pos
-part2 blocks = S.difference (blocks V.! hi) (blocks V.! lo)
-    where pred i = isNothing $ part1 blocks i
+part2 :: Blocks -> String
+part2 blocks = show x ++ "," ++ show y
+    where (V2 x y) = S.findMin $ S.difference (blocks V.! hi) (blocks V.! lo)
+          pred i = isNothing $ part1 blocks i
           Just (lo,hi) = binS (0, V.length blocks - 1) pred 

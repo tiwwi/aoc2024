@@ -41,7 +41,6 @@ solveClaw c@(Claw _ _ t) = (guard $ all (\x -> isInteger x && x >= 0) solution) 
 findPresses :: Input -> Int
 findPresses = sum . map (\(V2 x y) -> 3*x + 1*y) . mapMaybe solveClaw
 
-
 part1 :: Input -> Int
 part1 = findPresses
     where 

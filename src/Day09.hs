@@ -63,12 +63,10 @@ compress2 (start@(Block s Null) :<| rest) = (fromMaybe (start :<| compress2 rest
     where canMove (Block _ Null) = False
           canMove (Block st (Full _)) = st <= s
           (space, rest') = Seq.spanr isEmpty rest
-          fitsInd = Seq.findIndexR canMove rest'
           makeFit = do
                ind <- Seq.findIndexR canMove rest' 
                b@(Block s' (Full nr')) <- rest' Seq.!? ind
-               let remStart = s - s'
-                   newStart = (if s - s' > 0 then Seq.singleton $ Block (s - s') Null else Seq.Empty)
+               let newStart = (if s - s' > 0 then Seq.singleton $ Block (s - s') Null else Seq.Empty)
                    restDrained = Seq.update ind  (Block s' Null) rest'
                pure (b :<| (compress2 $ newStart <> restDrained))
 

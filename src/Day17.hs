@@ -16,7 +16,6 @@ import Data.Text.IO qualified as T
 import Data.Vector.Unboxed qualified as V
 import Helpers.Text
 import Debug.Trace
-import Data.List
 
 data Memory = Memory {_a :: Int, _b :: Int, _c :: Int} deriving (Show)
 
