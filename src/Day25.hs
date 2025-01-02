@@ -37,11 +37,11 @@ shrinkLock = Lock . shrink id
 shrinkKey :: Schematic -> Key
 shrinkKey = Key . shrink not
 
-match :: Lock -> Key -> Bool
-match (Lock ls) (Key ks) = and $ zipWith (<=) ls ks
+isMatch :: Lock -> Key -> Bool
+isMatch (Lock ls) (Key ks) = and $ zipWith (<=) ls ks
 
 part1 :: [Schematic] -> Int
-part1 arrs = sum $ fromEnum <$> liftA2 match locks keys
+part1 arrs = sum $ fromEnum <$> liftA2 isMatch locks keys
     where (locks, keys) = bimap (map shrinkLock) (map shrinkKey) $ partition isLock arrs
 part2 :: String
 part2 = "Frohe Weihnachten!"
