@@ -3,8 +3,6 @@ module Day20 (solve) where
 import Helpers.Matrix
 import Helpers.Algorithms
 import Data.Map qualified as M
-import Debug.Trace
-import Data.List (sortOn)
 import Helpers.List (count)
 
 type Maze = Array Pos Field

@@ -15,7 +15,6 @@ import Data.Text qualified as T
 import Data.Text.IO qualified as T
 import Data.Vector.Unboxed qualified as V
 import Helpers.Text
-import Debug.Trace
 
 data Memory = Memory {_a :: Int, _b :: Int, _c :: Int} deriving (Show)
 
@@ -32,7 +31,7 @@ type Program = V.Vector Int
 solve :: FilePath -> IO (String, String)
 solve fname = do
   txt <- T.readFile fname
-  let (mem, program) = traceShowId $ parseInput txt
+  let (mem, program) = parseInput txt
   return (part1 mem program, show $ part2 mem program)
 
 parseInput = quickParseT inputP

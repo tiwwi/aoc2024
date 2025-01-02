@@ -1,6 +1,5 @@
 module Day16 (solve) where
 
-import Debug.Trace
 import Helpers.Algorithms (dijkstra)
 import Helpers.Matrix
 import Data.Map qualified as M

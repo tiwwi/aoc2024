@@ -3,18 +3,15 @@ module Day23 (solve) where
 
 import Data.Text qualified as T
 import Data.Text.IO qualified as T
-import Helpers.Text (readT)
 import qualified Data.Map.Strict as M
 import qualified Data.Set as S
 import Helpers.List
-import Debug.Trace (traceShowWith, traceShowId)
 import Data.List (maximumBy)
 import Data.Function (on)
 
 type Node = T.Text
 type Edge = (T.Text, T.Text)
 type Graph = M.Map Node (S.Set Node)
-type Input = [Edge]
 
 solve :: FilePath -> IO (String, String)
 solve fname = do
