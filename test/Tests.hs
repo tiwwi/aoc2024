@@ -64,7 +64,7 @@ main :: IO ()
 main = defaultMain tests
 
 testedDays :: [Int]
-testedDays = [17]
+testedDays = [25]
 
 tests :: TestTree
 tests = testGroup "All Tests" (testDay <$> testedDays)
@@ -90,6 +90,7 @@ dayTests 14 = []
 dayTests 15 = [part1Test 15 "ex.in" "10092", part2Test 15 "ex.in" "9021"]
 dayTests 16 = [part1Test 16 "ex1.in" "7036", part1Test 16 "ex2.in" "11048", part2Test 16 "ex1.in" "45", part2Test 16 "ex2.in" "64"]
 dayTests 17 = [part1Test 17 "ex.in" "4,6,3,5,6,3,5,2,1,0", part1Test 17 "ex2.in" "0,1,2", part1Test 17 "ex3.in" "4,2,5,6,7,7,7,7,3,1,0"]
+dayTests 25 = [part1Test 25 "ex.in" "3"]
 dayTests _ = error "Unknown Day!"
 
 partTest:: ((String, String) -> String) -> Int -> String -> String -> String -> TestTree
